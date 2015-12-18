@@ -1,4 +1,4 @@
-application: your-app-name
+application: gae-image-proxy
 version: test
 runtime: python27
 api_version: 1

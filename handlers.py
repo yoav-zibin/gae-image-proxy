@@ -21,16 +21,18 @@ class ImageToJsonHandler(webapp2.RequestHandler):
         callback = self.request.get('callback')
         if callback:
             data = callback + '(' + data + ');'
+        self.response.headers.add_header("Access-Control-Allow-Origin", "*")
+        self.response.headers.add_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
         self.response.headers['Content-Type'] = 'application/json'
         self.response.write(data)
 
-        
+
     def get(self):
-        
+
         url = self.request.get('url')
         if not url:
             self.abort(404)
-            
+
         result = urlfetch.fetch(urllib.unquote(url))
         if result.status_code != 200:
             logging.error('Image Not Found, status %s' % result.status_code)
@@ -47,10 +49,3 @@ class ImageToJsonHandler(webapp2.RequestHandler):
         }
 
         self.write_json(params)
-
-                
-                
-                
-                
-        
-        
